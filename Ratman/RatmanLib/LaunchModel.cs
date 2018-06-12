@@ -72,7 +72,7 @@ namespace RatmanLib
                 prev = current;
                 current = RunStep(prev);
                 var output = CheckOutput(prev, current);
-                if (current.Stage > Launcher.Stages.Count)
+                if (current.Stage == 0)
                 {
                     Output = output;
                     break;
@@ -89,9 +89,12 @@ namespace RatmanLib
                 return;
             }
 
+            CalculateControlOptimization();
+
             OutputByStage.ForEach(os => WriteToLog(os.GetLogMessage()));
             WriteToLog(Output.GetLogMessage());
             WriteToLog(OutputOrbit.GetLogMessage());
+            WriteToLog(ControlOptimization.ToLogMessage());
         }
 
         private SimulationStep CreateFirstStep()
@@ -210,6 +213,10 @@ namespace RatmanLib
 
             // =IF(AZ5+AZ6>0;1;IF(BA5+BA6>0;2;IF(BB5+BB6>0;3;IF(BC5+BC6>0;4;FALSE))))
             step.Stage = prev.FuelMass[prev.StageIndex] > 0 ? prev.Stage : prev.Stage + 1;
+            if (step.Stage > Launcher.Stages.Count)
+            {
+                step.Stage = 0;
+            }
 
             // =I5+N5*Main!$P$11
             step.Coordinates.Altitude = prev.Coordinates.Altitude + prev.Velocity.Vy * DeltaT;
@@ -227,7 +234,7 @@ namespace RatmanLib
             step.Velocity.Vy = prev.Velocity.Vy + (prev.Acceleration.Ay + prev.Acceleration.Acentr - prev.Acceleration.G) * DeltaT;
 
             step.DryMass = 
-                (from s in Launcher.Stages where s.Number >= step.Stage select s.EmptyMass).Sum() + 
+                (from s in Launcher.Stages where s.Number >= step.Stage && step.Stage > 0 select s.EmptyMass).Sum() + 
                 (step.T <= Launcher.FairingJettision ? Launcher.FairingMass : 0.0) + 
                 Launcher.Payload;
 
@@ -262,7 +269,7 @@ namespace RatmanLib
             step.Acceleration.Acentr = step.Velocity.Vxabs * step.Velocity.Vxabs / (1000.0 * Constants.EarthRadius + step.Coordinates.Altitude);
             step.Acceleration.Acoriol = step.Velocity.Vy * step.Velocity.Vxabs / (1000.0 * Constants.EarthRadius + step.Coordinates.Altitude);
 
-            var currentStage = step.StageIndex < Launcher.Stages.Count ? Launcher.Stages[step.StageIndex] : null;
+            var currentStage = step.Stage > 0 ? Launcher.Stages[step.StageIndex] : null;
             step.Aerodynamics.Cx = currentStage?.Cx ?? 0.0;
             step.Aerodynamics.Cy = currentStage?.Cy ?? 0.0;
 
@@ -401,6 +408,19 @@ namespace RatmanLib
 
             OutputOrbit.Perigee = OutputOrbit.R1 - Constants.EarthRadius;
             OutputOrbit.Apogee = OutputOrbit.R2 - Constants.EarthRadius;
+        }
+
+        private void CalculateControlOptimization()
+        {
+            // =L39^2+(L40-M14)^2
+            ControlOptimization.PenaltyFunction = Math.Pow(Output.Vy, 2.0) + Math.Pow(Output.H - Orbit.Perigee, 2.0);
+
+            // =L39^2+(L40-M14)^2+(L38-M21)^2-0,1*E7
+            ControlOptimization.TargetFunction = 
+                Math.Pow(Output.Vy, 2.0) + 
+                Math.Pow(Output.H - Orbit.Perigee, 2.0) + 
+                Math.Pow(Output.Vx - Orbit.GetPerigeeVelocityAbsolute(Constants.GravityOfEarthStandard, Constants.EarthRadius), 2.0) -
+                0.1 * Launcher.Payload;
         }
 
         private double GetTemperature(double altitude)
