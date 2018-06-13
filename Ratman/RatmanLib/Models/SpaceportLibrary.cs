@@ -15,5 +15,13 @@ namespace RatmanLib.Models
                 return new Spaceport { Latitude = 28.5, Altitude = 3, Velocity = 0, Angle = 0 };
             }
         }
+
+        public static Spaceport Baikonur
+        {
+            get
+            {
+                return new Spaceport { Latitude = 45.63, Altitude = 200, Velocity = 0, Angle = 0 };
+            }
+        }
     }
 }

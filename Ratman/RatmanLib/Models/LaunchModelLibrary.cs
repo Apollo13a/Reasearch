@@ -43,5 +43,22 @@ namespace RatmanLib.Models
                 };
             }
         }
+
+        public static LaunchModel Zenit2
+        {
+            get
+            {
+                return new LaunchModel
+                {
+                    Name = "Zenit-2 LEO",
+                    Launcher = LauncherLibrary.Zenit2,
+                    Spaceport = SpaceportLibrary.Baikonur,
+                    Orbit = new OrbitInput { Perigee = 200, Apogee = 200, Inclination = 51.6 },
+                    PitchProgram = new PitchProgram { T0 = 0.0, Tmax = 414.0, Theta0 = 39.5972323417062, ThetaMax = -7.51251226418319 },
+                    Restrictions = new Restrictions { LaunchPosition = 90.0, ClearingTower = 10.0, MaxTurn = 2.0, QAlpha = 12000.0 },
+                    DeltaT = 1.0
+                };
+            }
+        }
     }
 }
