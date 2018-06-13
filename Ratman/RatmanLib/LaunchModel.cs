@@ -1,4 +1,7 @@
-﻿using System;
+﻿using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra.Double;
+using MathNet.Numerics.Optimization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +19,8 @@ namespace RatmanLib
             OutputOrbit = new OrbitOutput();
             ControlOptimization = new ControlOptimization();
         }
+
+        public string Name { get; set; }
 
         public Launcher Launcher { get; set; }
 
@@ -44,15 +49,94 @@ namespace RatmanLib
 
         public ControlOptimization ControlOptimization { get; private set; }
 
-        public void Start()
+        public void StartSimulation()
         {
             WriteToLog(Launcher.GetLogMessage());
             WriteToLog(Spaceport.GetLogMessage());
             WriteToLog(Orbit.GetLogMessage());
-            WriteToLog(Constants.GetLogMessage());
+            // WriteToLog(Constants.GetLogMessage());
             WriteToLog(string.Format("Delta-T = {0}", DeltaT));
+            WriteToLog(PitchProgram.ToLogMessage());
 
             RunSimulation();
+
+            OutputByStage.ForEach(os => WriteToLog(os.GetLogMessage()));
+            WriteToLog(Output.GetLogMessage());
+            WriteToLog(OutputOrbit.GetLogMessage());
+            WriteToLog(ControlOptimization.ToLogMessage());
+        }
+
+        public void StartOptimization()
+        {
+            RunOptimizationNelderMeadSimplex();
+
+            StartSimulation();
+        }
+
+        private void RunOptimizationNelderMeadSimplex()
+        {
+            var solver = new NelderMeadSimplex(0.0001, 10000);
+
+            var objectiveFunction = ObjectiveFunction.Value((v) =>
+            {
+                PitchProgram.Theta0 = v[0];
+                PitchProgram.ThetaMax = v[1];
+                RunSimulation();
+                return ControlOptimization.PenaltyFunction;
+            });
+
+            var res = solver.FindMinimum(
+                objectiveFunction, 
+                new DenseVector(new[] { PitchProgram.Theta0, PitchProgram.ThetaMax }),
+                new DenseVector(new[] { 1.0, 1.0 }));
+
+            PitchProgram.Theta0 = res.MinimizingPoint[0];
+            PitchProgram.ThetaMax = res.MinimizingPoint[1];
+
+            WriteToLog(res.ToLogMessage());
+        }
+
+        private void RunOptmization(double theta0Start = 90.0, double theta0End = 0.0, double thetaMaxStart = -90.0, double thetaMaxEnd = 45.0, double step = 1.0)
+        {
+            double theta0Best = 90.0;
+            double thetaMaxBest = -90.0;
+            double penaltyBest = double.MaxValue;
+
+            int count = 0;
+
+            try
+            {
+                for (double theta0Current = theta0Start; theta0Current > theta0End; theta0Current -= step)
+                {
+                    for (double thetaMaxCurrent = thetaMaxStart; thetaMaxCurrent < thetaMaxEnd; thetaMaxCurrent += step)
+                    {
+                        PitchProgram.Theta0 = theta0Current;
+                        PitchProgram.ThetaMax = thetaMaxCurrent;
+                        RunSimulation();
+
+                        if (ControlOptimization.PenaltyFunction < penaltyBest)
+                        {
+                            theta0Best = theta0Current;
+                            thetaMaxBest = thetaMaxCurrent;
+                            penaltyBest = ControlOptimization.PenaltyFunction;
+
+                            WriteToLog($"Found solution: Theta0={theta0Current} ThetaMax={ thetaMaxCurrent} Penalty={penaltyBest}");
+                        }
+
+                        count++;
+
+                        if (count > 100000)
+                        {
+                            return;
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                PitchProgram.Theta0 = theta0Best;
+                PitchProgram.ThetaMax = thetaMaxBest;
+            }
         }
 
         private void RunSimulation(int maxSteps = 10000)
@@ -68,17 +152,16 @@ namespace RatmanLib
 
             for (int i = 0; i < maxSteps; i++)
             {
-                WriteToLog(current.GetLogMessage());
+                // WriteToLog(current.GetLogMessage());
                 prev = current;
                 current = RunStep(prev);
+                SimulationSteps.Add(current);
                 var output = CheckOutput(prev, current);
                 if (current.Stage == 0)
                 {
                     Output = output;
                     break;
                 }
-
-                SimulationSteps.Add(current);
             }
 
             CalculateOutputOrbit();
@@ -90,11 +173,6 @@ namespace RatmanLib
             }
 
             CalculateControlOptimization();
-
-            OutputByStage.ForEach(os => WriteToLog(os.GetLogMessage()));
-            WriteToLog(Output.GetLogMessage());
-            WriteToLog(OutputOrbit.GetLogMessage());
-            WriteToLog(ControlOptimization.ToLogMessage());
         }
 
         private SimulationStep CreateFirstStep()

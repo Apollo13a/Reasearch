@@ -12,6 +12,8 @@ namespace RatmanLib
             Stages = new List<LauncherStage>();
         }
 
+        public string Name { get; set; }
+
         /// <summary>
         /// Launch mass, kg
         /// </summary>

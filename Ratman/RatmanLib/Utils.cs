@@ -11,6 +11,9 @@
         {
             var log = new StringBuilder();
             var type = obj.GetType();
+
+            log.AppendLine($"----------- {type.Name} -----------");
+
             var props = (from pi in type.GetProperties(BindingFlags.Instance | BindingFlags.Public) orderby pi.Name select pi).ToArray();
             foreach (var propertyInfo in props)
             {
@@ -28,6 +31,8 @@
 
                 log.AppendLine($"{propertyInfo.Name} = '{str}'");
             }
+
+            log.AppendLine($"----------- {type.Name} -----------");
 
             return log.ToString();
         }
