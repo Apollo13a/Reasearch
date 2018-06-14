@@ -7,6 +7,11 @@ namespace RatmanLib
 {
     public class LauncherStage
     {
+        public LauncherStage()
+        {
+            Throttle = new List<TimeValue>();
+        }
+
         /// <summary>
         /// Stage number
         /// </summary>
@@ -119,10 +124,33 @@ namespace RatmanLib
             set;
         }
 
+        public List<TimeValue> Throttle
+        {
+            get;
+            private set;
+        }
+
 
         public double GetThrottle(int currentStage, double time)
         {
-            return currentStage == Number ? 1.0 : 0.0;
+            var throttleValue = currentStage == Number ? 1.0 : 0.0;
+
+            if (Throttle.Count == 0)
+            {
+                return throttleValue;
+            }
+
+            for (int i = 0; i < Throttle.Count; i++)
+            {
+                var timeValue = Throttle[i];
+                if (time >= timeValue.Time)
+                {
+                    throttleValue = timeValue.Value;
+                    break;
+                }                
+            }
+
+            return throttleValue;
         }
 
         public string GetLogMessage()

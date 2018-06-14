@@ -38,6 +38,8 @@
             this.dgvSimulation = new System.Windows.Forms.DataGridView();
             this.velocityInfoBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tpControl = new System.Windows.Forms.TabPage();
+            this.tDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvSimulationPitchThrust = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvSimulationPitchAD = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvSimulationCoordinatesAltitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -46,22 +48,11 @@
             this.dgvSimulationAtmosphereRo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvSimulationAerodynamicsAOA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvSimulationAerodynamicsQ = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.indexDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stageIndexDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.coordinatesDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.velocityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.thrustNDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.aDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cVDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.accelerationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.atmosphereDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.aerodynamicsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dryMassDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.controlDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tcMain.SuspendLayout();
             this.tpLog.SuspendLayout();
             this.tpSimulation.SuspendLayout();
@@ -149,6 +140,8 @@
             this.dgvSimulation.AutoGenerateColumns = false;
             this.dgvSimulation.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSimulation.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.tDataGridViewTextBoxColumn,
+            this.stageDataGridViewTextBoxColumn,
             this.dgvSimulationPitchThrust,
             this.dgvSimulationPitchAD,
             this.dgvSimulationCoordinatesAltitude,
@@ -157,22 +150,11 @@
             this.dgvSimulationAtmosphereRo,
             this.dgvSimulationAerodynamicsAOA,
             this.dgvSimulationAerodynamicsQ,
-            this.indexDataGridViewTextBoxColumn,
-            this.tDataGridViewTextBoxColumn,
-            this.stageDataGridViewTextBoxColumn,
-            this.stageIndexDataGridViewTextBoxColumn,
-            this.dataGridViewTextBoxColumn1,
-            this.coordinatesDataGridViewTextBoxColumn,
-            this.velocityDataGridViewTextBoxColumn,
             this.mDataGridViewTextBoxColumn,
             this.thrustNDataGridViewTextBoxColumn,
             this.aDataGridViewTextBoxColumn,
             this.cVDataGridViewTextBoxColumn,
-            this.accelerationDataGridViewTextBoxColumn,
-            this.atmosphereDataGridViewTextBoxColumn,
-            this.aerodynamicsDataGridViewTextBoxColumn,
-            this.dryMassDataGridViewTextBoxColumn,
-            this.controlDataGridViewTextBoxColumn});
+            this.dryMassDataGridViewTextBoxColumn});
             this.dgvSimulation.DataSource = this.velocityInfoBindingSource;
             this.dgvSimulation.Location = new System.Drawing.Point(6, 6);
             this.dgvSimulation.Name = "dgvSimulation";
@@ -192,6 +174,20 @@
             this.tpControl.TabIndex = 2;
             this.tpControl.Text = "Control";
             this.tpControl.UseVisualStyleBackColor = true;
+            // 
+            // tDataGridViewTextBoxColumn
+            // 
+            this.tDataGridViewTextBoxColumn.DataPropertyName = "T";
+            this.tDataGridViewTextBoxColumn.HeaderText = "T";
+            this.tDataGridViewTextBoxColumn.Name = "tDataGridViewTextBoxColumn";
+            this.tDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // stageDataGridViewTextBoxColumn
+            // 
+            this.stageDataGridViewTextBoxColumn.DataPropertyName = "Stage";
+            this.stageDataGridViewTextBoxColumn.HeaderText = "Stage";
+            this.stageDataGridViewTextBoxColumn.Name = "stageDataGridViewTextBoxColumn";
+            this.stageDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // dgvSimulationPitchThrust
             // 
@@ -249,55 +245,6 @@
             this.dgvSimulationAerodynamicsQ.Name = "dgvSimulationAerodynamicsQ";
             this.dgvSimulationAerodynamicsQ.ReadOnly = true;
             // 
-            // indexDataGridViewTextBoxColumn
-            // 
-            this.indexDataGridViewTextBoxColumn.DataPropertyName = "Index";
-            this.indexDataGridViewTextBoxColumn.HeaderText = "Index";
-            this.indexDataGridViewTextBoxColumn.Name = "indexDataGridViewTextBoxColumn";
-            this.indexDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // tDataGridViewTextBoxColumn
-            // 
-            this.tDataGridViewTextBoxColumn.DataPropertyName = "T";
-            this.tDataGridViewTextBoxColumn.HeaderText = "T";
-            this.tDataGridViewTextBoxColumn.Name = "tDataGridViewTextBoxColumn";
-            this.tDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // stageDataGridViewTextBoxColumn
-            // 
-            this.stageDataGridViewTextBoxColumn.DataPropertyName = "Stage";
-            this.stageDataGridViewTextBoxColumn.HeaderText = "Stage";
-            this.stageDataGridViewTextBoxColumn.Name = "stageDataGridViewTextBoxColumn";
-            this.stageDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // stageIndexDataGridViewTextBoxColumn
-            // 
-            this.stageIndexDataGridViewTextBoxColumn.DataPropertyName = "StageIndex";
-            this.stageIndexDataGridViewTextBoxColumn.HeaderText = "StageIndex";
-            this.stageIndexDataGridViewTextBoxColumn.Name = "stageIndexDataGridViewTextBoxColumn";
-            this.stageIndexDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "Pitch";
-            this.dataGridViewTextBoxColumn1.HeaderText = "Pitch";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // coordinatesDataGridViewTextBoxColumn
-            // 
-            this.coordinatesDataGridViewTextBoxColumn.DataPropertyName = "Coordinates";
-            this.coordinatesDataGridViewTextBoxColumn.HeaderText = "Coordinates";
-            this.coordinatesDataGridViewTextBoxColumn.Name = "coordinatesDataGridViewTextBoxColumn";
-            this.coordinatesDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // velocityDataGridViewTextBoxColumn
-            // 
-            this.velocityDataGridViewTextBoxColumn.DataPropertyName = "Velocity";
-            this.velocityDataGridViewTextBoxColumn.HeaderText = "Velocity";
-            this.velocityDataGridViewTextBoxColumn.Name = "velocityDataGridViewTextBoxColumn";
-            this.velocityDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
             // mDataGridViewTextBoxColumn
             // 
             this.mDataGridViewTextBoxColumn.DataPropertyName = "M";
@@ -326,40 +273,12 @@
             this.cVDataGridViewTextBoxColumn.Name = "cVDataGridViewTextBoxColumn";
             this.cVDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // accelerationDataGridViewTextBoxColumn
-            // 
-            this.accelerationDataGridViewTextBoxColumn.DataPropertyName = "Acceleration";
-            this.accelerationDataGridViewTextBoxColumn.HeaderText = "Acceleration";
-            this.accelerationDataGridViewTextBoxColumn.Name = "accelerationDataGridViewTextBoxColumn";
-            this.accelerationDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // atmosphereDataGridViewTextBoxColumn
-            // 
-            this.atmosphereDataGridViewTextBoxColumn.DataPropertyName = "Atmosphere";
-            this.atmosphereDataGridViewTextBoxColumn.HeaderText = "Atmosphere";
-            this.atmosphereDataGridViewTextBoxColumn.Name = "atmosphereDataGridViewTextBoxColumn";
-            this.atmosphereDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // aerodynamicsDataGridViewTextBoxColumn
-            // 
-            this.aerodynamicsDataGridViewTextBoxColumn.DataPropertyName = "Aerodynamics";
-            this.aerodynamicsDataGridViewTextBoxColumn.HeaderText = "Aerodynamics";
-            this.aerodynamicsDataGridViewTextBoxColumn.Name = "aerodynamicsDataGridViewTextBoxColumn";
-            this.aerodynamicsDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
             // dryMassDataGridViewTextBoxColumn
             // 
             this.dryMassDataGridViewTextBoxColumn.DataPropertyName = "DryMass";
             this.dryMassDataGridViewTextBoxColumn.HeaderText = "DryMass";
             this.dryMassDataGridViewTextBoxColumn.Name = "dryMassDataGridViewTextBoxColumn";
             this.dryMassDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // controlDataGridViewTextBoxColumn
-            // 
-            this.controlDataGridViewTextBoxColumn.DataPropertyName = "Control";
-            this.controlDataGridViewTextBoxColumn.HeaderText = "Control";
-            this.controlDataGridViewTextBoxColumn.Name = "controlDataGridViewTextBoxColumn";
-            this.controlDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // MainForm
             // 
@@ -392,7 +311,8 @@
         private System.Windows.Forms.DataGridView dgvSimulation;
         private System.Windows.Forms.TabPage tpControl;
         private System.Windows.Forms.BindingSource velocityInfoBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn pitchDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stageDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvSimulationPitchThrust;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvSimulationPitchAD;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvSimulationCoordinatesAltitude;
@@ -401,22 +321,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvSimulationAtmosphereRo;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvSimulationAerodynamicsAOA;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvSimulationAerodynamicsQ;
-        private System.Windows.Forms.DataGridViewTextBoxColumn indexDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stageDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stageIndexDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn coordinatesDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn velocityDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn mDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn thrustNDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn aDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn cVDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn accelerationDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn atmosphereDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn aerodynamicsDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn dryMassDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn controlDataGridViewTextBoxColumn;
     }
 }
 

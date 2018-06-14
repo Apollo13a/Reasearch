@@ -61,6 +61,7 @@
     <Compile Include="Restrictions.cs" />
     <Compile Include="SimulationStep.cs" />
     <Compile Include="Spaceport.cs" />
+    <Compile Include="TimeValue.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
