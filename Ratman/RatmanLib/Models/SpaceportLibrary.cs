@@ -8,7 +8,7 @@ namespace RatmanLib.Models
 {
     public static class SpaceportLibrary
     {
-        public static Spaceport CapCanaveral
+        public static Spaceport CapeCanaveral
         {
             get
             {

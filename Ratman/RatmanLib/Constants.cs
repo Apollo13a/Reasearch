@@ -25,19 +25,12 @@ namespace RatmanLib
         /// <summary>
         /// Air density, 
         /// </summary>
-        public const double AirDensity = 1.29;
+        public double AirDensity { get; set; } = 1.29;
 
         /// <summary>
         /// Mu, 
         /// </summary>
-        public double Mu
-        {
-            get
-            {
-                return GravityOfEarthStandard * EarthRadius * EarthRadius * 1000000.0;
-            }
-        }
-
+        public const double Mu = GravityOfEarthStandard * EarthRadius * EarthRadius * 1000000.0;
 
         public string GetLogMessage()
         {
