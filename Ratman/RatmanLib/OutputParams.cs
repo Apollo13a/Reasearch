@@ -26,6 +26,10 @@
 
         public double Pitch { get; set; }
 
+        public double MaxQ { get; set; }
+
+        public double MaxG { get; set; }
+
         public string GetLogMessage()
         {
             return string.Format(@"------------- OutputParams ------------
@@ -39,6 +43,8 @@ H (km) = {6}
 Stage = {7}
 Mass (t) = {8}
 Pitch = {9}
+MaxQ= {10}
+MaxG = {11}
 ------------- OutputParams ------------",
                 T,
                 Index,
@@ -49,7 +55,9 @@ Pitch = {9}
                 H,
                 Stage,
                 MassT,
-                Pitch);
+                Pitch,
+                MaxQ,
+                MaxG);
         }
     }
 }

@@ -457,6 +457,8 @@ namespace RatmanLib
             stageOutput.H = current.Coordinates.Altitude / 1000.0;
             stageOutput.MassT = current.M / 1000.0;
             stageOutput.Pitch = current.Pitch.Thrust;
+            stageOutput.MaxQ = (from ss in SimulationSteps where ss.Stage == stageOutput.Stage select ss.Aerodynamics.Q).Max();
+            stageOutput.MaxG = (from ss in SimulationSteps where ss.Stage == stageOutput.Stage select ss.A).Max() / Constants.GravityOfEarthStandard;
 
             OutputByStage.Add(stageOutput);
 

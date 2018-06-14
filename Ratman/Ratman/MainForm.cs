@@ -33,14 +33,22 @@ namespace Ratman
                 string[] props = col.DataPropertyName.Split('.');
                 var propInfo = row.DataBoundItem.GetType().GetProperty(props[0]);
                 object val = propInfo.GetValue(row.DataBoundItem, null);
+
                 for (int i = 1; i < props.Length; i++)
                 {
+                    if (val is double[] array)
+                    {
+                        val = array[Convert.ToInt32(props[i])];
+                        break;
+                    }
+
                     propInfo = val.GetType().GetProperty(props[i]);
                     val = propInfo.GetValue(val, null);
                 }
 
                 e.Value = val;
             }
+
         }
 
         private void DisplayModel(LaunchModel model)
@@ -68,7 +76,7 @@ namespace Ratman
 
         private void BtnRunOptimization_Click(object sender, EventArgs e)
         {
-            var model = LaunchModelLibrary.Falcon9b5v2;
+            var model = LaunchModelLibrary.Falcon9b5v3;
             log.Clear();
             model.LogMessage += new Action<string>(Model_LogMessage);
 

@@ -133,6 +133,11 @@ namespace RatmanLib
 
         public double GetThrottle(int currentStage, double time)
         {
+            if (currentStage > Number)
+            {
+                return 0.0;
+            }
+
             var throttleValue = currentStage == Number ? 1.0 : 0.0;
 
             if (Throttle.Count == 0)
@@ -140,7 +145,7 @@ namespace RatmanLib
                 return throttleValue;
             }
 
-            for (int i = 0; i < Throttle.Count; i++)
+            for (int i = Throttle.Count - 1; i >= 0; i--)
             {
                 var timeValue = Throttle[i];
                 if (time >= timeValue.Time)

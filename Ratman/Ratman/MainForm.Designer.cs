@@ -36,8 +36,8 @@
             this.tpLog = new System.Windows.Forms.TabPage();
             this.tpSimulation = new System.Windows.Forms.TabPage();
             this.dgvSimulation = new System.Windows.Forms.DataGridView();
-            this.velocityInfoBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tpControl = new System.Windows.Forms.TabPage();
+            this.velocityInfoBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvSimulationPitchThrust = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,6 +52,8 @@
             this.thrustNDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.aDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cVDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvSimulationThrottle1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvSimulationThrottle2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dryMassDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tcMain.SuspendLayout();
             this.tpLog.SuspendLayout();
@@ -154,6 +156,8 @@
             this.thrustNDataGridViewTextBoxColumn,
             this.aDataGridViewTextBoxColumn,
             this.cVDataGridViewTextBoxColumn,
+            this.dgvSimulationThrottle1,
+            this.dgvSimulationThrottle2,
             this.dryMassDataGridViewTextBoxColumn});
             this.dgvSimulation.DataSource = this.velocityInfoBindingSource;
             this.dgvSimulation.Location = new System.Drawing.Point(6, 6);
@@ -161,10 +165,6 @@
             this.dgvSimulation.ReadOnly = true;
             this.dgvSimulation.Size = new System.Drawing.Size(999, 426);
             this.dgvSimulation.TabIndex = 0;
-            // 
-            // velocityInfoBindingSource
-            // 
-            this.velocityInfoBindingSource.DataSource = typeof(RatmanLib.SimulationStep);
             // 
             // tpControl
             // 
@@ -174,6 +174,10 @@
             this.tpControl.TabIndex = 2;
             this.tpControl.Text = "Control";
             this.tpControl.UseVisualStyleBackColor = true;
+            // 
+            // velocityInfoBindingSource
+            // 
+            this.velocityInfoBindingSource.DataSource = typeof(RatmanLib.SimulationStep);
             // 
             // tDataGridViewTextBoxColumn
             // 
@@ -273,6 +277,20 @@
             this.cVDataGridViewTextBoxColumn.Name = "cVDataGridViewTextBoxColumn";
             this.cVDataGridViewTextBoxColumn.ReadOnly = true;
             // 
+            // dgvSimulationThrottle1
+            // 
+            this.dgvSimulationThrottle1.DataPropertyName = "Throttle.0";
+            this.dgvSimulationThrottle1.HeaderText = "Throttle 1";
+            this.dgvSimulationThrottle1.Name = "dgvSimulationThrottle1";
+            this.dgvSimulationThrottle1.ReadOnly = true;
+            // 
+            // dgvSimulationThrottle2
+            // 
+            this.dgvSimulationThrottle2.DataPropertyName = "Throttle.1";
+            this.dgvSimulationThrottle2.HeaderText = "Throttle 2";
+            this.dgvSimulationThrottle2.Name = "dgvSimulationThrottle2";
+            this.dgvSimulationThrottle2.ReadOnly = true;
+            // 
             // dryMassDataGridViewTextBoxColumn
             // 
             this.dryMassDataGridViewTextBoxColumn.DataPropertyName = "DryMass";
@@ -325,6 +343,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn thrustNDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn aDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn cVDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvSimulationThrottle1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvSimulationThrottle2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dryMassDataGridViewTextBoxColumn;
     }
 }

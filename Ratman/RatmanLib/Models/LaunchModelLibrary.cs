@@ -44,6 +44,29 @@ namespace RatmanLib.Models
             }
         }
 
+        public static LaunchModel Falcon9b5v3
+        {
+            get
+            {
+                var launcher = LauncherLibrary.Falcon9Block5;
+                launcher.Payload = 22900;
+                launcher.Stages[0].Throttle.Add(new TimeValue { Time = 49.0, Value = 0.6 });
+                launcher.Stages[0].Throttle.Add(new TimeValue { Time = 71.0, Value = 1.0 });
+                launcher.Stages[0].Throttle.Add(new TimeValue { Time = 140.0, Value = 0.79 });
+
+                return new LaunchModel
+                {
+                    Name = "Falcon 9 Block 5 LEO. MaxTurn = 0.56, MaxG = 4",
+                    Launcher = launcher,
+                    Spaceport = SpaceportLibrary.CapCanaveral,
+                    Orbit = new OrbitInput { Perigee = 185, Apogee = 185, Inclination = 28.5 },
+                    PitchProgram = new PitchProgram { T0 = 0.0, Tmax = 540.0, Theta0 = 50.0, ThetaMax = 0.0 },
+                    Restrictions = new Restrictions { LaunchPosition = 90.0, ClearingTower = 10.0, MaxTurn = 0.56, QAlpha = 12000.0 },
+                    DeltaT = 1.0
+                };
+            }
+        }
+
         public static LaunchModel Zenit2
         {
             get
