@@ -71,6 +71,16 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
+    <None Include="Properties\DataSources\RatmanLib.SimulationStep+AccelerationInfo.datasource" />
+    <None Include="Properties\DataSources\RatmanLib.SimulationStep+AerodynamicsInfo.datasource" />
+    <None Include="Properties\DataSources\RatmanLib.SimulationStep+AtmosphereInfo.datasource" />
+    <None Include="Properties\DataSources\RatmanLib.SimulationStep+ControlInfo.datasource" />
+    <None Include="Properties\DataSources\RatmanLib.SimulationStep+ControlIntervalInfo.datasource" />
+    <None Include="Properties\DataSources\RatmanLib.SimulationStep+CoordinatesInfo.datasource" />
+    <None Include="Properties\DataSources\RatmanLib.SimulationStep+PitchInfo.datasource" />
+    <None Include="Properties\DataSources\RatmanLib.SimulationStep+QAlphaInfo.datasource" />
+    <None Include="Properties\DataSources\RatmanLib.SimulationStep+VelocityInfo.datasource" />
+    <None Include="Properties\DataSources\RatmanLib.SimulationStep.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
