@@ -140,13 +140,7 @@ namespace RatmanLib
 
             public double Vy { get; set; }
 
-            public double V
-            {
-                get
-                {
-                    return Math.Sqrt(Vx * Vx + Vy * Vy);
-                }
-            }
+            public double V { get; set; }
         }
 
         public class AccelerationInfo

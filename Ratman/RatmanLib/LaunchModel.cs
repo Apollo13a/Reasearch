@@ -210,6 +210,7 @@ namespace RatmanLib
             step.Velocity.Vx = Spaceport.Velocity * Math.Cos(Math.PI / 180.0 * Spaceport.Angle);
             step.Velocity.Vxabs = step.Velocity.Vx + Spaceport.GetEarthRotationVelocity(Constants.EarthRadius);
             step.Velocity.Vy = Spaceport.Velocity * Math.Sin(Math.PI / 180.0 * Spaceport.Angle);
+            step.Velocity.V = Math.Sqrt(step.Velocity.Vx * step.Velocity.Vx + step.Velocity.Vy * step.Velocity.Vy);
             step.DryMass = Launcher.Stages.Sum(s => s.EmptyMass) + Launcher.FairingMass + Launcher.Payload;
             step.FuelMass = Launcher.Stages.Select(s => s.FullMass - s.EmptyMass).ToArray();
             step.M = step.DryMass + step.FuelMass.Sum();
@@ -340,6 +341,8 @@ namespace RatmanLib
 
             // =N5+(W5+Y5-X5)*Main!$P$11
             step.Velocity.Vy = prev.Velocity.Vy + (prev.Acceleration.Ay + prev.Acceleration.Acentr - prev.Acceleration.G) * DeltaT;
+
+            step.Velocity.V = Math.Sqrt(step.Velocity.Vx * step.Velocity.Vx + step.Velocity.Vy * step.Velocity.Vy);
 
             step.DryMass = 
                 (from s in Launcher.Stages where s.Number >= step.Stage && step.Stage > 0 select s.EmptyMass).Sum() + 
