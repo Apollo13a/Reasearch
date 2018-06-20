@@ -54,7 +54,11 @@
             this.cVDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvSimulationThrottle1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvSimulationThrottle2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvSimulationThrustKgf1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvSimulationThrustKgf2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dryMassDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvSimulationFuelMass1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvSimulationFuelMass2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tcMain.SuspendLayout();
             this.tpLog.SuspendLayout();
             this.tpSimulation.SuspendLayout();
@@ -158,7 +162,11 @@
             this.cVDataGridViewTextBoxColumn,
             this.dgvSimulationThrottle1,
             this.dgvSimulationThrottle2,
-            this.dryMassDataGridViewTextBoxColumn});
+            this.dgvSimulationThrustKgf1,
+            this.dgvSimulationThrustKgf2,
+            this.dryMassDataGridViewTextBoxColumn,
+            this.dgvSimulationFuelMass1,
+            this.dgvSimulationFuelMass2});
             this.dgvSimulation.DataSource = this.velocityInfoBindingSource;
             this.dgvSimulation.Location = new System.Drawing.Point(6, 6);
             this.dgvSimulation.Name = "dgvSimulation";
@@ -291,12 +299,40 @@
             this.dgvSimulationThrottle2.Name = "dgvSimulationThrottle2";
             this.dgvSimulationThrottle2.ReadOnly = true;
             // 
+            // dgvSimulationThrustKgf1
+            // 
+            this.dgvSimulationThrustKgf1.DataPropertyName = "ThrustKgf.0";
+            this.dgvSimulationThrustKgf1.HeaderText = "Thrust (kgf) 1";
+            this.dgvSimulationThrustKgf1.Name = "dgvSimulationThrustKgf1";
+            this.dgvSimulationThrustKgf1.ReadOnly = true;
+            // 
+            // dgvSimulationThrustKgf2
+            // 
+            this.dgvSimulationThrustKgf2.DataPropertyName = "ThrustKgf.1";
+            this.dgvSimulationThrustKgf2.HeaderText = "Thrust (kgf) 2";
+            this.dgvSimulationThrustKgf2.Name = "dgvSimulationThrustKgf2";
+            this.dgvSimulationThrustKgf2.ReadOnly = true;
+            // 
             // dryMassDataGridViewTextBoxColumn
             // 
             this.dryMassDataGridViewTextBoxColumn.DataPropertyName = "DryMass";
             this.dryMassDataGridViewTextBoxColumn.HeaderText = "DryMass";
             this.dryMassDataGridViewTextBoxColumn.Name = "dryMassDataGridViewTextBoxColumn";
             this.dryMassDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // dgvSimulationFuelMass1
+            // 
+            this.dgvSimulationFuelMass1.DataPropertyName = "FuelMass.0";
+            this.dgvSimulationFuelMass1.HeaderText = "FuelMass 1";
+            this.dgvSimulationFuelMass1.Name = "dgvSimulationFuelMass1";
+            this.dgvSimulationFuelMass1.ReadOnly = true;
+            // 
+            // dgvSimulationFuelMass2
+            // 
+            this.dgvSimulationFuelMass2.DataPropertyName = "FuelMass.1";
+            this.dgvSimulationFuelMass2.HeaderText = "FuelMass 2";
+            this.dgvSimulationFuelMass2.Name = "dgvSimulationFuelMass2";
+            this.dgvSimulationFuelMass2.ReadOnly = true;
             // 
             // MainForm
             // 
@@ -345,7 +381,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cVDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvSimulationThrottle1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvSimulationThrottle2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvSimulationThrustKgf1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvSimulationThrustKgf2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dryMassDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvSimulationFuelMass1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvSimulationFuelMass2;
     }
 }
 
