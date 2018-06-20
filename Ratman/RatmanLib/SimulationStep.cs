@@ -19,6 +19,8 @@ namespace RatmanLib
             Control = new ControlInfo();
         }
 
+        public SimulationStep NextStep { get; set; }
+
         public int Index { get; set; }
 
         /// <summary>

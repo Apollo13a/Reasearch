@@ -49,7 +49,7 @@ namespace RatmanLib.Models
             get
             {
                 var launcher = LauncherLibrary.Falcon9Block5;
-                launcher.Payload = 22910;
+                launcher.Payload = 22980;
                 launcher.Stages[0].Throttle.Add(new TimeValue { Time = 49.0, Value = 0.6 });
                 launcher.Stages[0].Throttle.Add(new TimeValue { Time = 71.0, Value = 1.0 });
                 launcher.Stages[0].Throttle.Add(new TimeValue { Time = 140.0, Value = 0.79 });
@@ -59,8 +59,8 @@ namespace RatmanLib.Models
                     Name = "Falcon 9 Block 5 LEO. MaxTurn = 0.56, MaxG = 4; MaxQ = 30000;",
                     Launcher = launcher,
                     Spaceport = SpaceportLibrary.CapeCanaveral,
-                    Orbit = new OrbitInput { Perigee = 185, Apogee = 185, Inclination = 28.5 },
-                    PitchProgram = new PitchProgram { T0 = 0.0, Tmax = 540.0, Theta0 = 50.0, ThetaMax = 0.0 },
+                    Orbit = new OrbitInput { Perigee = 200.0, Apogee = 200.0, Inclination = 28.5 },
+                    PitchProgram = new PitchProgram { T0 = 0.0, Tmax = 553.0, Theta0 = 50.0, ThetaMax = 0.0 },
                     Restrictions = new Restrictions { LaunchPosition = 90.0, ClearingTower = 10.0, MaxTurn = 0.56, QAlpha = 12000.0 },
                     DeltaT = 1.0
                 };

@@ -146,22 +146,40 @@ namespace RatmanLib
             Output = new OutputParams();
             OutputOrbit = new OrbitOutput();
 
-            SimulationStep prev = null;
-            SimulationStep current = CreateFirstStep();
-            SimulationSteps.Add(current);
+            SimulationStep first = CalculateFirstStep(null);
+            SimulationSteps.Add(first);
 
+            SimulationStep prev = first;
             for (int i = 0; i < maxSteps; i++)
             {
-                // WriteToLog(current.GetLogMessage());
-                prev = current;
-                current = RunStep(prev);
+                var current = CalculateStep(prev, null);
+                prev.NextStep = current;
                 SimulationSteps.Add(current);
+                if (current.Stage == 0)
+                {
+                    break;
+                }
+
+                prev = current;
+            }
+
+            OutputByStage.Clear();
+
+            CalculateFirstStep(first);
+            prev = first;
+
+            for (int i = 1; i < SimulationSteps.Count; i++)
+            {
+                var current = SimulationSteps[i];
+                CalculateStep(prev, current);
                 var output = CheckOutput(prev, current);
                 if (current.Stage == 0)
                 {
                     Output = output;
                     break;
                 }
+
+                prev = current;
             }
 
             CalculateOutputOrbit();
@@ -175,14 +193,17 @@ namespace RatmanLib
             CalculateControlOptimization();
         }
 
-        private SimulationStep CreateFirstStep()
+        private SimulationStep CalculateFirstStep(SimulationStep step)
         {
-            var step = new SimulationStep()
+            if (step == null)
             {
-                Index = 0,
-                T = 0,
-                Stage = 1
-            };
+                step = new SimulationStep()
+                {
+                    Index = 0,
+                    T = 0,
+                    Stage = 1
+                };
+            }
 
             step.Coordinates.Altitude = Spaceport.Altitude;
             step.Coordinates.Distance = 0.0;
@@ -208,8 +229,14 @@ namespace RatmanLib
             step.ThrustN = Constants.GravityOfEarthStandard * step.ThrustKgf.Sum();
 
             // =IF(AND(E5=E8;E8>0);(R6/Q6+R5/Q5)/2;R5/Q5)
-            // TODO: step.A
-            step.A = step.ThrustN / step.M;
+            if (step.Stage > 0 && (step?.NextStep?.NextStep?.NextStep?.Stage ?? 0) == step.Stage)
+            {
+                step.A = (step.NextStep.ThrustN / step.NextStep.M + step.ThrustN / step.M) / 2.0;
+            }
+            else
+            {
+                step.A = step.ThrustN / step.M;
+            }
 
             step.CV = 0.0;
 
@@ -280,11 +307,14 @@ namespace RatmanLib
             return step;
         }
 
-        private SimulationStep RunStep(SimulationStep prev)
+        private SimulationStep CalculateStep(SimulationStep prev, SimulationStep step)
         {
-            var step = new SimulationStep();
+            if (step == null)
+            {
+                step = new SimulationStep();
+            }
 
-            step.Index = prev.Index + 1; ;
+            step.Index = prev.Index + 1;
 
             // =B5+Main!$P$11
             step.T = prev.T + DeltaT;
@@ -337,8 +367,14 @@ namespace RatmanLib
             step.ThrustN = Constants.GravityOfEarthStandard * step.ThrustKgf.Sum();
 
             // =IF(AND(E5=E8;E8>0);(R6/Q6+R5/Q5)/2;R5/Q5)
-            // TODO: step.A
-            step.A = step.ThrustN / step.M;
+            if (step.Stage > 0 && (step?.NextStep?.NextStep?.NextStep?.Stage ?? 0) == step.Stage)
+            {
+                step.A = (step.NextStep.ThrustN / step.NextStep.M + step.ThrustN / step.M) / 2.0;
+            }
+            else
+            {
+                step.A = step.ThrustN / step.M;
+            }
 
             // =T5+Main!$P$11*S5
             step.CV = prev.CV + DeltaT * prev.A;
