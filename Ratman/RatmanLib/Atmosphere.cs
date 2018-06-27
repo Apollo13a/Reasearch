@@ -84,7 +84,7 @@ namespace RatmanLib
                         return 1.29;
 
                     case AtmosphereType.GOST:
-                        return 1.225;
+                        return gostInterpolation.Interpolate(0.0);
 
                     case AtmosphereType.NASA:
                     case AtmosphereType.NASAAndGOSTv1:
@@ -106,6 +106,8 @@ namespace RatmanLib
                     return GetTemperatureNASA(altitude);
 
                 case AtmosphereType.Ratman:
+                    return GetTemperatureRatman(altitude);
+
                 case AtmosphereType.GOST:
                     // TODO
                     return 0.0;
@@ -127,8 +129,7 @@ namespace RatmanLib
                     return GetDensityGOST(altitude);
 
                 case AtmosphereType.Ratman:
-                    // TODO
-                    return 0.0;
+                    return GetDensityRatman(altitude);
             }
 
             return 0.0;
@@ -151,6 +152,17 @@ namespace RatmanLib
             }
 
             return result;
+        }
+
+        private double GetTemperatureRatman(double altitude)
+        {
+            // =IF(I5<11000;15-0,0065*I5;-56,5)
+            if (altitude < 11000.0)
+            {
+                return 15.0 - 0.0065 * altitude;
+            }
+
+            return -56.5;
         }
 
         private double GetDensityNASA(double altitude)
@@ -205,7 +217,13 @@ namespace RatmanLib
 
         private double GetDensityGOST(double altitude)
         {
-            return gostInterpolation.Interpolate(altitude);
+            return gostInterpolation.Interpolate(altitude) / gostInterpolation.Interpolate(0.0);
+        }
+
+        private double GetDensityRatman(double altitude)
+        {
+            // =MIN(1;EXP(-0,00001*Main!Q$5*Main!Q$9*I5*(AB$5+273)/(AB5+273)))
+            return Math.Min(1.0, Math.Exp(-0.00001 * Constants.GravityOfEarthStandard * AirDensity * altitude * (GetTemperature(0.0) + 273.0) / (GetTemperature(altitude) + 273.0)));
         }
     }
 }
