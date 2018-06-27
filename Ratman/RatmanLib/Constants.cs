@@ -23,11 +23,6 @@ namespace RatmanLib
         public const double EarthRadius = 6378.0;
 
         /// <summary>
-        /// Air density, 
-        /// </summary>
-        public double AirDensity { get; set; } = 1.29;
-
-        /// <summary>
         /// Mu, 
         /// </summary>
         public const double Mu = GravityOfEarthStandard * EarthRadius * EarthRadius * 1000000.0;
@@ -39,13 +34,11 @@ g (stand) (m/s^2) = {0}
 g (polar) (m/s^2) = {1}
 Earth radius (km) = {2}
 Mu = {3}
-Air density = {4}
 ------------- Constants -------------",
                 GravityOfEarthStandard,
                 GravityOfEarthPolar,
                 EarthRadius,
-                Mu,
-                AirDensity);
+                Mu);
         }
 
     }

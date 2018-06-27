@@ -36,5 +36,36 @@
 
             return log.ToString();
         }
+
+        public static T[] GetColumn<T>(this T[,] array, int columnIndex)
+        {
+            int rowCount = array.GetLength(0);
+            T[] column = new T[rowCount];
+            for (int i = 0; i < rowCount; i++)
+            {
+                column[i] = array[i, columnIndex];
+            }
+
+            return column;
+        }
+
+        public static T[][] GetColumns<T>(this T[,] array)
+        {
+            int rowCount = array.GetLength(0);
+            int columnCount = array.GetLength(1);
+            T[][] columns = new T[columnCount][];
+            for (int j = 0; j < columnCount; j++)
+            {
+                T[] column = new T[rowCount];
+                columns[j] = column;
+                for (int i = 0; i < rowCount; i++)
+                {
+                    column[i] = array[i, j];
+                }
+            }
+
+            return columns;
+        }
+
     }
 }

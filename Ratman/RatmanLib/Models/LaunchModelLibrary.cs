@@ -18,8 +18,9 @@ namespace RatmanLib.Models
                     Launcher = LauncherLibrary.Falcon9Block5,
                     Spaceport = SpaceportLibrary.CapeCanaveral,
                     Orbit = new OrbitInput { Perigee = 200, Apogee = 200, Inclination = 28.5 },
-                    PitchProgram = new PitchProgram { T0 = 0.0, Tmax = 540.0, Theta0 = 50.7359012901344, ThetaMax = -3.75814564514969 },
+                    PitchProgram = new PitchProgram { T0 = 0.0, Tmax = 540.0, Theta0 = 50.2436933185272, ThetaMax = -3.51827540749036 },
                     Restrictions = new Restrictions { LaunchPosition = 90.0, ClearingTower = 10.0, MaxTurn = 2.0, QAlpha = 12000.0 },
+                    Atmosphere = new Atmosphere { Type = AtmosphereType.NASAAndGOSTv1 },
                     DeltaT = 1.0
                 };
             }
@@ -39,6 +40,7 @@ namespace RatmanLib.Models
                     Orbit = new OrbitInput { Perigee = 200, Apogee = 200, Inclination = 28.5 },
                     PitchProgram = new PitchProgram { T0 = 0.0, Tmax = 540.0, Theta0 = 50.0, ThetaMax = 0.0 },
                     Restrictions = new Restrictions { LaunchPosition = 90.0, ClearingTower = 10.0, MaxTurn = 0.56, QAlpha = 12000.0 },
+                    Atmosphere = new Atmosphere { Type = AtmosphereType.NASAAndGOSTv1 },
                     DeltaT = 1.0
                 };
             }
@@ -62,10 +64,9 @@ namespace RatmanLib.Models
                     Orbit = new OrbitInput { Perigee = 200.0, Apogee = 200.0, Inclination = 28.5 },
                     PitchProgram = new PitchProgram { T0 = 0.0, Tmax = 553.0, Theta0 = 50.0, ThetaMax = 0.0 },
                     Restrictions = new Restrictions { LaunchPosition = 90.0, ClearingTower = 10.0, MaxTurn = 0.56, QAlpha = 12000.0 },
+                    Atmosphere = new Atmosphere { Type = AtmosphereType.NASAAndGOSTv1 },
                     DeltaT = 1.0
                 };
-
-                model.Constants.AirDensity = 1.225;
 
                 return model;
             }
@@ -83,6 +84,7 @@ namespace RatmanLib.Models
                     Orbit = new OrbitInput { Perigee = 200, Apogee = 200, Inclination = 51.6 },
                     PitchProgram = new PitchProgram { T0 = 0.0, Tmax = 414.0, Theta0 = 39.5972323417062, ThetaMax = -7.51251226418319 },
                     Restrictions = new Restrictions { LaunchPosition = 90.0, ClearingTower = 10.0, MaxTurn = 2.0, QAlpha = 12000.0 },
+                    Atmosphere = new Atmosphere { Type = AtmosphereType.NASAAndGOSTv1 },
                     DeltaT = 1.0
                 };
             }

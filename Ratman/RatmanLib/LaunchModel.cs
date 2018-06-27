@@ -1,13 +1,13 @@
-﻿using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.LinearAlgebra.Double;
-using MathNet.Numerics.Optimization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace RatmanLib
+﻿namespace RatmanLib
 {
+    using MathNet.Numerics.LinearAlgebra;
+    using MathNet.Numerics.LinearAlgebra.Double;
+    using MathNet.Numerics.Optimization;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     public class LaunchModel
     {
         public LaunchModel()
@@ -33,6 +33,8 @@ namespace RatmanLib
         public PitchProgram PitchProgram { get; set; }
 
         public Restrictions Restrictions { get; set; }
+
+        public Atmosphere Atmosphere { get; set; }
 
         /// <summary>
         /// Delta-T, s
@@ -215,8 +217,8 @@ namespace RatmanLib
             step.FuelMass = Launcher.Stages.Select(s => s.FullMass - s.EmptyMass).ToArray();
             step.M = step.DryMass + step.FuelMass.Sum();
 
-            step.Atmosphere.Tc = GetTemperature(step.Coordinates.Altitude);
-            step.Atmosphere.Ro = GetDensity(step.Coordinates.Altitude);
+            step.Atmosphere.Tc = Atmosphere.GetTemperature(step.Coordinates.Altitude);
+            step.Atmosphere.Ro = Atmosphere.GetDensity(step.Coordinates.Altitude);
 
             step.Throttle = Launcher.Stages.Select(s => s.GetThrottle(step.Stage, step.T)).ToArray();
 
@@ -246,7 +248,7 @@ namespace RatmanLib
             step.Acceleration.Acoriol = step.Velocity.Vy * step.Velocity.Vxabs / (1000.0 * Constants.EarthRadius + step.Coordinates.Altitude);
 
             step.Aerodynamics.AOA = 0.0;
-            step.Aerodynamics.Q = 0.5 * Constants.AirDensity * step.Atmosphere.Ro * step.Velocity.V * step.Velocity.V;
+            step.Aerodynamics.Q = 0.5 * Atmosphere.AirDensity * step.Atmosphere.Ro * step.Velocity.V * step.Velocity.V;
 
             var firstStage = Launcher.Stages.First();
             step.Aerodynamics.Cx = firstStage.Cx;
@@ -355,8 +357,8 @@ namespace RatmanLib
             // =SUM(AY6:BC6)
             step.M = step.DryMass + step.FuelMass.Sum();
 
-            step.Atmosphere.Tc = GetTemperature(step.Coordinates.Altitude);
-            step.Atmosphere.Ro = GetDensity(step.Coordinates.Altitude);
+            step.Atmosphere.Tc = Atmosphere.GetTemperature(step.Coordinates.Altitude);
+            step.Atmosphere.Ro = Atmosphere.GetDensity(step.Coordinates.Altitude);
 
             step.Throttle = Launcher.Stages.Select(s => s.GetThrottle(step.Stage, step.T)).ToArray();
 
@@ -391,7 +393,7 @@ namespace RatmanLib
             step.Aerodynamics.Cy = currentStage?.Cy ?? 0.0;
 
             // =0,5*Main!Q$9*AC6*O6*O6
-            step.Aerodynamics.Q = 0.5 * Constants.AirDensity * step.Atmosphere.Ro * step.Velocity.V * step.Velocity.V;
+            step.Aerodynamics.Q = 0.5 * Atmosphere.AirDensity * step.Atmosphere.Ro * step.Velocity.V * step.Velocity.V;
 
             step.Control.T = step.T;
 
@@ -540,65 +542,6 @@ namespace RatmanLib
                 Math.Pow(Output.H - Orbit.Perigee, 2.0) + 
                 Math.Pow(Output.Vx - Orbit.GetPerigeeVelocityAbsolute(Constants.GravityOfEarthStandard, Constants.EarthRadius), 2.0) -
                 0.1 * Launcher.Payload;
-        }
-
-        private double GetTemperature(double altitude)
-        {
-            double result;
-            if (altitude < 11000)
-            {
-                result = 15.04 - 0.00649 * altitude;
-            }
-            else if (altitude < 25000)
-            {
-                result = -56.46;
-            }
-            else
-            {
-                result = -131.21 + 0.00299 * altitude;
-            }
-
-            return result;
-        }
-
-        private double GetDensity(double altitude)
-        {
-            double p;
-            var t = GetTemperature(altitude);
-
-            if (altitude < 11000)
-            {
-                p = 101.29 * Math.Pow((t + 273.1) / 288.08, 5.256);
-            }
-            else if (altitude < 25000)
-            {
-                p = 22.65 * Math.Exp(1.73 - 0.000157 * altitude);
-            }
-            else
-            {
-                p = 2.488 * Math.Pow((t + 273.1) / 216.6, -11.388);
-            }
-
-            var density = p / (0.2869 * (t + 273.1)) / 1.226613787;
-
-            if (altitude > 80000 && altitude <= 100000)
-            {
-                density = 0.000001;
-            }
-            else if (altitude > 100000 && altitude <= 150000)
-            {
-                density = 0.00000001;
-            }
-            else if (altitude > 150000 && altitude <= 200000)
-            {
-                density = 0.0000000005;
-            }
-            else if (altitude > 200000 && altitude <= 300000)
-            {
-                density = 0.00000000005;
-            }
-
-            return density;
         }
 
         private void WriteToLog(string message)

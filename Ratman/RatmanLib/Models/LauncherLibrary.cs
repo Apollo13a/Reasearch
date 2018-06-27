@@ -15,7 +15,7 @@ namespace RatmanLib.Models
                 return new Launcher
                 {
                     Name = "Falcon 9 Block 5",
-                    Payload = 24040,
+                    Payload = 24130,
                     Stages = new List<LauncherStage>
                     {
                         new LauncherStage { Number = 1, FullMass = 425353, EmptyMass = 26530, IspAtm = 286, IspVac = 312, ThrustVac = 838.9076967, Sx = 12, Sy = 256, Cx = 0.3, Cy = 0.3 },

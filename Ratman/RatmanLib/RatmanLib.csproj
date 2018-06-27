@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Atmosphere.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ControlOptimization.cs" />
     <Compile Include="Launcher.cs" />
